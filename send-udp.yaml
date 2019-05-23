@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: connectiontest
+  name: connectiontest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connectiontest
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: connectiontest
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - while echo $counter; do counter=$((counter+1)); echo -n "$counter" | nc -v -n -u -w1 10.38.253.2 5000; done
+        image: geerd/netcat
+        imagePullPolicy: IfNotPresent
+        name: connectiontest

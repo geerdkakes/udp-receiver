@@ -1,0 +1,30 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: sendudp2
+  name: sendudp2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sendudp2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: sendudp2
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - while echo $counter; do counter=$((counter+1)); echo -n "$counter" | nc -v  -u -w1 receivetest 5000; done
+        image: geerd/netcat
+        imagePullPolicy: IfNotPresent
+        name: sendudp2
