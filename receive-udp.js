@@ -3,7 +3,7 @@ var HOST = '0.0.0.0';
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
 
-var PORT = process.env.PORT || 5000;
+var PORT = process.env.PORT || 5005;
 
 server.on('listening', function () {
     var address = server.address();
