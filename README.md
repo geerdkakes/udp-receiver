@@ -26,7 +26,7 @@ while echo $counter; do counter=$((counter+1)); echo -n "$counter" | nc -v -n -u
 
 To use these tools from within a pod first run the following command:
 ```
-kubectl run netcat -it --image=geerd/netcat --restart=Never -- /bin/bash
+kubectl run netcat -it --image=geerd/netcat --restart=Never --rm=true  -- /bin/bash
 ```
 
 ## Building the containers
